@@ -3,6 +3,8 @@
 #include "navegabilidade.h"
 #include "Tipos.cpp"
 #include "Produto.h"
+#include "algorithm"
+using namespace std;
 
 #define MAX 200
 
@@ -26,7 +28,7 @@ void exibirMenuPagamento() {
     cout << "Opção: ";
 }
 
-void lerProdutos(Produto compras[], int* pQtd, double& totalCompra) {
+void lerProdutos(Produto compras[], int* pQtd) {
     int opcProd;
     do {
         exibirMenuProdutos();
@@ -44,17 +46,13 @@ void lerProdutos(Produto compras[], int* pQtd, double& totalCompra) {
         }
         case 3:
             cout << "Cancelando operação...\n";
-            cin.ignore();
-            cout << "Digite 'ENTER' para continuar...\n";
-            getchar();
-            system("cls");
             break;
         default:
             cout << "Opção inválida!\n";
             break;
         }
     } while (opcProd != 3);
-    limpaTela();
+    limparTela();
 }
 
 void processarPagamento(double totalCompra) {
@@ -68,10 +66,7 @@ void processarPagamento(double totalCompra) {
         case 1:
             cout << "Total à vista: R$ " << (totalCompra * 0.85) << "\n";
             cout << "Compra finalizada!\n";
-            cin.ignore();
-            cout << "Digite 'ENTER' para continuar...\n";
-            getchar();
-            system("cls");
+            limparTela();
             break;
         case 2: {
             int numParcelas;
@@ -83,24 +78,38 @@ void processarPagamento(double totalCompra) {
             }
             cout << "Total à prazo: " << numParcelas << " x de R$ " << (totalCompra / numParcelas) << "\n";
             cout << "Compra finalizada!\n";
-            cin.ignore();
-            cout << "Digite 'ENTER' para continuar...\n";
-            getchar();
-            system("cls");
+            limparTela();
             break;
         }
         case 3:
             cout << "Cancelando operação...\n";
-            cin.ignore();
-            cout << "Digite 'ENTER' para continuar...\n";
-            getchar();
-            system("cls");
+            limparTela();
             break;
         default:
             cout << "Opção inválida!\n";
             break;
         }
     } while (opcPgto != 1 && opcPgto != 2 && opcPgto != 3);
+}
+
+// Calcula o preço total da sua compra atual
+// Faz isso loopando pelo array de produtos e adicionando ao total a multiplicação do preço do produto e a quantidade ou peso do produto
+double calcularPrecoTotal(Produto compras[], int* pQtd)
+{
+    double totalP = 0;
+    for (int i = 0; i < *pQtd; i++)
+    {
+        totalP += compras[i].preco * compras[i].qtde_peso;
+    }
+    return totalP;
+}
+
+// Anula todos os valores de um vetor de Produtos
+// Para que quando o pagamento seja efetuado, os produtos que você adicionou na compra anterior não afetem o preço da sua próxima compra
+// A função fill preenche o array com um novo produto vazio, o primeiro argumento é o primeiro valor do array, o segundo é o ultimo valor do array, e o terceiro é o valor que preencherá o array
+void resetarVetorProdutos(Produto(&compras)[MAX])
+{
+    fill(begin(compras), end(compras), Produto());
 }
 
 int main() {
@@ -115,19 +124,22 @@ int main() {
         opc = lerOpc();
 
         switch (opc) {
-        case 1:
-            lerProdutos(compras, &qtd, totalCompra);
-            break;
-        case 2:
-            processarPagamento(totalCompra);
-            break;
-        case 3:
-            cout << "Cancelar compra\n";
-            limpaTela();
-            break;
-        default:
-            cout << "Opção Inválida!\n";
-            break;
+            case 1:
+                limparTela();
+                lerProdutos(compras, &qtd);
+                break;
+            case 2:
+                limparTela();
+                totalCompra = calcularPrecoTotal(compras, &qtd);
+                processarPagamento(totalCompra);
+                resetarVetorProdutos(compras);
+                break;
+            case 3:
+                cout << "Compra Cancelada\n";
+                break;
+            default:
+                cout << "Opção Inválida!\n";
+                break;
         }
     } while (opc != 3);
 

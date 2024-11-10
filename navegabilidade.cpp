@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 
-void limpaTela() {
-    fflush(stdin);
+void limparTela() {
+    cin.ignore();
     cout << "Digite 'ENTER' para continuar...\n";
     getchar();
     system("cls");

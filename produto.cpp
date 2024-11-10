@@ -41,7 +41,7 @@ produto lerProduto() {
     prod.qtde_peso = qtde;
     prod.preco = precoUnt;
     cout << "Produto cadastrado na compra...\n";
-    limpaTela();
+    limparTela();
     return prod;
 }
 
@@ -70,7 +70,7 @@ produto lerProdutoKg()
     }
 
     cout << "Produto cadastrado na compra...\n";
-    limpaTela();
+    limparTela();
 
     return prod;
 }
