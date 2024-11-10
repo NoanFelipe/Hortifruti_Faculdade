@@ -1,168 +1,136 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <locale.h>
 #include "navegabilidade.h"
 #include "Tipos.cpp"
 #include "Produto.h"
 
-#define MAX 200;
+#define MAX 200
 
 using namespace std;
 
-#define TRUE 1
-#define FALSE 0
+void exibirMenuProdutos() {
+    cout << "Digite a opÃ§Ã£o desejada:\n";
+    cout << " 1. Por unidade\n";
+    cout << " 2. Por peso\n";
+    cout << " 3. Voltar\n";
+    cout << "*******************************\n";
+    cout << "OpÃ§Ã£o: ";
+}
 
-void lerProdutos(Produtos compras[], int* pQtd) {
-    //l?gica para ler prox produto
+void exibirMenuPagamento() {
+    cout << "Digite a opÃ§Ã£o desejada:\n";
+    cout << " 1. Pagamento Ã  vista (15% de desc.)\n";
+    cout << " 2. Pagamento Ã  prazo\n";
+    cout << " 3. Voltar\n";
+    cout << "*******************************\n";
+    cout << "OpÃ§Ã£o: ";
+}
+
+void lerProdutos(Produto compras[], int* pQtd, double& totalCompra) {
     int opcProd;
     do {
-        cout << "Digite a opção deseja:\n";
-        cout << " 1. Por unidade\n";
-        cout << " 2. por peso \n";
-        cout << " 3. Voltar \n";
-
-        cout << "*******************************\n";
-        cout << "Opção:";
+        exibirMenuProdutos();
         cin >> opcProd;
 
         switch (opcProd) {
-        case 1: {
-            compras[*pQtd*] = lerProdUnt();
+        case 1:
+            compras[*pQtd] = lerProduto();
             (*pQtd)++;
-
             break;
-        }case 2: {
-            //l?gica por kg
-            double peso;
-            double precoKg;
-            while (TRUE) {
-                cout << "Peso:";
-                cin >> peso;
-                if (peso > 0) {
-                    break;
-                }
-                else {
-                    cout << "Leitura inv?lida!\n";
-                }
-            }
-            while (TRUE) {
-                cout << "Pre?o por kilo:";
-                cin >> precoKg;
-                if (precoKg > 0) {
-                    break;
-                }
-                else {
-                    cout << "Leitura inv?lida!\n";
-                }
-            }
-            double custoProd;
-            custoProd = peso * precoKg;
-            totalCompra = totalCompra + custoProd;
-            cout << "Total parcial: R$ " << totalCompra << "\n";
-            cout << "Produto cadastrado na compra...\n";
-            fflush(stdin);
+        case 2: {
+            compras[*pQtd] = lerProdutoKg();
+            (*pQtd)++;
+            break;
+        }
+        case 3:
+            cout << "Cancelando operaÃ§Ã£o...\n";
+            cin.ignore();
             cout << "Digite 'ENTER' para continuar...\n";
             getchar();
             system("cls");
             break;
-        }case 3: {
-            cout << "cancelando operação...\n";
-            fflush(stdin);
-            cout << "Digite 'ENTER' para continuar...\n";
-            getchar();
-            system("cls");
+        default:
+            cout << "OpÃ§Ã£o invÃ¡lida!\n";
             break;
-        }default: {
-            cout << "Opção inválida!";
         }
-        }
-
-    } while (opcProd != 1 && opcProd != 2 && opcProd != 3);
+    } while (opcProd != 3);
     limpaTela();
-
 }
 
-int main()
-{
-    Produtos compras[MAX];
+void processarPagamento(double totalCompra) {
+    int opcPgto;
+    do {
+        cout << "Total da compra: R$" << totalCompra << "\n";
+        exibirMenuPagamento();
+        cin >> opcPgto;
+
+        switch (opcPgto) {
+        case 1:
+            cout << "Total Ã  vista: R$ " << (totalCompra * 0.85) << "\n";
+            cout << "Compra finalizada!\n";
+            cin.ignore();
+            cout << "Digite 'ENTER' para continuar...\n";
+            getchar();
+            system("cls");
+            break;
+        case 2: {
+            int numParcelas;
+            cout << "NÃºmero de parcelas: ";
+            while (!(cin >> numParcelas) || numParcelas <= 0) {
+                cout << "Leitura invÃ¡lida! Tente novamente.\nNÃºmero de parcelas: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            cout << "Total Ã  prazo: " << numParcelas << " x de R$ " << (totalCompra / numParcelas) << "\n";
+            cout << "Compra finalizada!\n";
+            cin.ignore();
+            cout << "Digite 'ENTER' para continuar...\n";
+            getchar();
+            system("cls");
+            break;
+        }
+        case 3:
+            cout << "Cancelando operaÃ§Ã£o...\n";
+            cin.ignore();
+            cout << "Digite 'ENTER' para continuar...\n";
+            getchar();
+            system("cls");
+            break;
+        default:
+            cout << "OpÃ§Ã£o invÃ¡lida!\n";
+            break;
+        }
+    } while (opcPgto != 1 && opcPgto != 2 && opcPgto != 3);
+}
+
+int main() {
+    Produto compras[MAX];
     int qtd = 0;
-    //ajusdar a acentuação
-    setlocale(LC_ALL, "");
-    //ler uma opção em loop at? que seja 3 (sai do programa)
-    int opc;
     double totalCompra = 0;
+
+    setlocale(LC_ALL, "");
+
+    int opc;
     do {
         opc = lerOpc();
 
         switch (opc) {
-        case 1: {
-            lerProdutos(compras, &qtd);
+        case 1:
+            lerProdutos(compras, &qtd, totalCompra);
             break;
-        }case 2: {
-            int opcPgto;
-            do {
-                cout << "Total da compra: R$" << totalCompra << "\n";
-                cout << "Digite a opção deseja:\n";
-                cout << " 1. Pagamento à vista (15% de desc.)\n";
-                cout << " 2. Pagamento à prazo \n";
-                cout << " 3. Voltar \n";
-                cout << "*******************************\n";
-                cout << "Opção:";
-                cin >> opcPgto;
-
-                switch (opcPgto) {
-                case 1: {
-                    cout << "Total à vista: R$ " << (totalCompra * 0.85) << "\n";
-                    cout << "Compra finalizada! \n";
-                    fflush(stdin);
-                    cout << "Digite 'ENTER' para continuar...\n";
-                    getchar();
-                    system("cls");
-                    opc = 3;
-                    break;
-                }case 2: {
-                    int numParcelas;
-                    while (TRUE) {
-                        cout << "Número de parcelas:";
-                        cin >> numParcelas;
-                        if (numParcelas > 0) {
-                            break;
-                        }
-                        else {
-                            cout << "Leitura inválida!\n";
-                        }
-                    }
-                    cout << "Total ? prazo: " << numParcelas << " x de R$ " << (totalCompra / numParcelas) << "\n";
-                    cout << "Compra finalizada! \n";
-                    fflush(stdin);
-                    cout << "Digite 'ENTER' para continuar...\n";
-                    getchar();
-                    system("cls");
-                    opc = 3;
-                    break;
-                }case 3: {
-                    cout << "cancelando opera??o...\n";
-                    fflush(stdin);
-                    cout << "Digite 'ENTER' para continuar...\n";
-                    getchar();
-                    system("cls");
-                    break;
-                }default: {
-                    cout << "Op??o inv?lida!\n";
-                }
-                }
-            } while (opcPgto <= 0 || opcPgto >= 4);
+        case 2:
+            processarPagamento(totalCompra);
             break;
-        }case 3: {
+        case 3:
             cout << "Cancelar compra\n";
-            cout << "cancelando operação...\n";
             limpaTela();
-            ;                break;
-        }default: {
-            cout << "Opção Inválida!\n";
+            break;
+        default:
+            cout << "OpÃ§Ã£o InvÃ¡lida!\n";
+            break;
         }
-        }
-
     } while (opc != 3);
-    cout << "Obrigado e Volte Sempre..." << endl;
+
+    cout << "Obrigado e Volte Sempre...\n";
     return 0;
 }
