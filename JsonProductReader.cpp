@@ -73,3 +73,33 @@ void adicionarProdutoNoArquivo(const string& nomeArquivo, const Produto& novoPro
         cout << "Erro ao abrir o arquivo para escrita.\n";
     }
 }
+
+void removerProdutoNoArquivo(const string& nomeArquivo, size_t posicao) {
+    vector<Produto> produtos = lerProdutosDoArquivo(nomeArquivo);
+
+    // Verifica se a posição é válida
+    if (posicao >= produtos.size()) {
+        cout << "Erro: posição inválida. Nenhum produto foi removido.\n";
+        return;
+    }
+
+    // Remove o produto da posição desejada
+    produtos.erase(produtos.begin() + posicao);
+
+    // Reescreve o vetor atualizado de produtos no arquivo JSON
+    ofstream arquivo(nomeArquivo);
+    if (arquivo.is_open()) {
+        json j = json::array();
+
+        for (const auto& prod : produtos) {
+            j.push_back(produtoParaJson(prod));
+        }
+
+        arquivo << j.dump(4); // Salva o JSON atualizado no arquivo
+        arquivo.close();
+        cout << "Produto na posição " << posicao << " removido com sucesso.\n";
+    }
+    else {
+        cout << "Erro ao abrir o arquivo para escrita.\n";
+    }
+}

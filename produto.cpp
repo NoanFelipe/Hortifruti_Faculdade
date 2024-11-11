@@ -75,17 +75,52 @@ Produto lerProdutoKg(string m)
     return prod;
 }
 
+Produto lerProdutoParaJson(string m, int tipo) //int tipo só pode ser 1 ou 2
+{
+    Produto prod;
+    string nome;
+    double precoUnt;
+
+    fflush(stdin);
+    getline(cin, nome);
+    cout << "Nome do produto: ";
+    cin >> nome;
+
+    while (true) {
+        if (tipo == UNT)
+        {
+            cout << "Preço unitário: R$";
+        }
+        else if (tipo == PESO)
+        {
+            cout << "Preço por kilo: R$";
+        }
+        cin >> precoUnt;
+        if (precoUnt > 0) {
+            break;
+        }
+        else {
+            cout << "Leitura inválida!\n";
+        }
+    }
+    
+    prod.nome = nome;
+    prod.tipo = tipo;
+    prod.preco = precoUnt;
+    prod.qtde_peso = 0;
+    cout << m << "\n";
+    limparTela();
+    return prod;
+}
+
 void printProduto(Produto prod) {
-    cout << "Produto cadastrado:\n";
     if (prod.tipo == UNT) {
         cout << "Nome:" << prod.nome << endl;
-        cout << "Preço unitário" << prod.preco << endl;
-        cout << "Qtde" << (int)prod.qtde_peso << endl;
+        cout << "Preço unitário: R$" << prod.preco << endl;
     }
     else {
         cout << "Nome:" << prod.nome << endl;
-        cout << "Preço por quilo:" << prod.preco << endl;
-        cout << "Peso:" << (int)prod.qtde_peso << endl;
+        cout << "Preço por quilo: R$" << prod.preco << endl;
     }
 }
 

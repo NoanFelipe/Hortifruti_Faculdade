@@ -13,5 +13,6 @@ typedef struct produto Produto;
 
 Produto lerProduto(string m);
 Produto lerProdutoKg(string m);
+Produto lerProdutoParaJson(string m, int tipo);
 void printProduto(Produto prod);
 #endif // PRODUTO_H

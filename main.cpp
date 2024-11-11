@@ -40,6 +40,84 @@ void exibirMenuPagamento() {
     cout << "Opção: ";
 }
 
+void exibirMenuEscolhaProdutos()
+{
+    cout << "Digite a opção desejada:\n";
+    cout << " 1. Escolher produto:\n";
+    cout << " 2. Voltar\n";
+    cout << "*******************************\n";
+    cout << "Opção: ";
+}
+
+void printProdutos(vector<Produto>& produtos)
+{
+    for (int i = 0; i < produtos.size(); i++)
+    {
+        cout << "ID do produto: " << i << "\n";
+        printProduto(produtos[i]);
+        cout << endl;
+    }
+}
+
+Produto escolherProduto(vector<Produto> produtos)
+{
+    int opt;
+    Produto prod;
+    double qtde_peso = 0;
+
+    do 
+    {
+        cout << "Escolha o produto por id: ";
+        cin >> opt;
+    } while (!(opt >= 0 && opt < produtos.size()));
+    prod = produtos[opt];
+    
+    while (true) {
+        if (prod.tipo == UNT)
+        {
+            cout << "Quantidade: ";
+        }
+        else if (prod.tipo == PESO)
+        {
+            cout << "Peso: ";
+        }
+        cin >> qtde_peso;
+
+        if (qtde_peso > 0) {
+            break;
+        }
+        else {
+            cout << "Leitura inválida!\n";
+        }
+    }
+    
+    prod.qtde_peso = qtde_peso;
+
+    return prod;
+}
+
+void lerProdutos(Produto(&compras)[MAX], int* pQtd)
+{
+    Produto prod;
+    vector<Produto> produtos = lerProdutosDoArquivo(JsonFileName);
+    int opt = 0;
+
+    do 
+    {
+        exibirMenuEscolhaProdutos();
+        cin >> opt;
+        if (opt == 1)
+        {
+            printProdutos(produtos);
+            compras[*pQtd] = escolherProduto(produtos);
+            (*pQtd)++;
+        }
+        limparTela();
+    } 
+    while (opt != 2);
+}
+
+/*
 void lerProdutos(Produto compras[], int* pQtd) {
     int opcProd;
     do {
@@ -48,11 +126,11 @@ void lerProdutos(Produto compras[], int* pQtd) {
 
         switch (opcProd) {
         case 1:
-            compras[*pQtd] = lerProduto("Produto cadastrado na compra...");
+            compras[*pQtd] = escolherProduto();
             (*pQtd)++;
             break;
         case 2: {
-            compras[*pQtd] = lerProdutoKg("Produto cadastrado na compra...");
+            compras[*pQtd] = escolherProduto();
             (*pQtd)++;
             break;
         }
@@ -66,6 +144,7 @@ void lerProdutos(Produto compras[], int* pQtd) {
     } while (opcProd != 3);
     limparTela();
 }
+*/
 
 void processarPagamento(double totalCompra) {
     int opcPgto;
@@ -133,10 +212,10 @@ void adicionarNovoProduto()
 
         switch (opcProd) {
         case 1:
-            adicionarProdutoNoArquivo(JsonFileName, lerProduto("Produto adicionado ao banco de dados..."));
+            adicionarProdutoNoArquivo(JsonFileName, lerProdutoParaJson("Produto adicionado ao banco de dados...", opcProd));
             break;
         case 2: {
-            adicionarProdutoNoArquivo(JsonFileName, lerProdutoKg("Produto adicionado ao banco de dados..."));
+            adicionarProdutoNoArquivo(JsonFileName, lerProdutoParaJson("Produto adicionado ao banco de dados...", opcProd));
             break;
         }
         case 3:
@@ -147,44 +226,54 @@ void adicionarNovoProduto()
             break;
         }
     } while (opcProd != 3);
+
     limparTela();
 }
 
-int main() {
+void Setup()
+{
+    setlocale(LC_ALL, "");
+    criarArquivoSeNaoExistir(JsonFileName);
+}
+
+void MenuPrincipal()
+{
+    Setup();
+
     Produto compras[MAX];
     int qtd = 0;
     double totalCompra = 0;
-
-    setlocale(LC_ALL, "");
-    criarArquivoSeNaoExistir(JsonFileName);
-
     int opc;
     do {
         opc = lerOpc();
 
         switch (opc) {
-            case 1:
-                limparTela();
-                lerProdutos(compras, &qtd);
-                break;
-            case 2:
-                limparTela();
-                totalCompra = calcularPrecoTotal(compras, &qtd);
-                processarPagamento(totalCompra);
-                resetarVetorProdutos(compras);
-                break;
-            case 3:
-                cout << "Compra Cancelada\n";
-                break;
-            case 4:
-                limparTela();
-                
-            default:
-                cout << "Opção Inválida!\n";
-                break;
+        case 1:
+            limparTela();
+            lerProdutos(compras, &qtd);
+            break;
+        case 2:
+            limparTela();
+            totalCompra = calcularPrecoTotal(compras, &qtd);
+            processarPagamento(totalCompra);
+            resetarVetorProdutos(compras);
+            break;
+        case 3:
+            cout << "Compra Cancelada\n";
+            break;
+        case 4:
+            adicionarNovoProduto();
+        default:
+            cout << "Opção Inválida!\n";
+            break;
         }
     } while (opc != 3);
 
     cout << "Obrigado e Volte Sempre...\n";
+}
+
+int main() 
+{
+    MenuPrincipal();
     return 0;
 }

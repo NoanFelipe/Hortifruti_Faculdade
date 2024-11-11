@@ -19,9 +19,9 @@ int lerOpc() {
     cout << " 1. Ler próximo produto\n";
     cout << " 2. Finalizar compra\n";
     cout << " 3. Cancelar compra\n";
-    cout << " 4. Adicionar novo produto\n";
+    cout << " 4. Modificar banco de produtos\n";
     cout << "*****************************************\n";
-    cout << "Opção:";
+    cout << "Opção: ";
     //ler opção
     cin >> opc;
     return opc;
