@@ -1,10 +1,10 @@
 ﻿#include <iostream>
 #include <string>
-#include "tipos.cpp"
+#include "produto.h"
 #include "navegabilidade.h"
-using namespace std;
+#include "tipos.cpp"
 
-produto lerProduto() {
+Produto lerProduto(string m) {
     //lógica por unidade
     Produto prod;
     string nome;
@@ -40,12 +40,12 @@ produto lerProduto() {
     prod.tipo = UNT;
     prod.qtde_peso = qtde;
     prod.preco = precoUnt;
-    cout << "Produto cadastrado na compra...\n";
+    cout << m << "\n";
     limparTela();
     return prod;
 }
 
-produto lerProdutoKg()
+Produto lerProdutoKg(string m)
 {
     Produto prod;
     prod.tipo = PESO;
@@ -69,7 +69,7 @@ produto lerProdutoKg()
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    cout << "Produto cadastrado na compra...\n";
+    cout << m << "\n";
     limparTela();
 
     return prod;

@@ -19,12 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="JsonProductReader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="navegabilidade.cpp" />
     <ClCompile Include="produto.cpp" />
     <ClCompile Include="tipos.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="JsonProductReader.h" />
     <ClInclude Include="navegabilidade.h" />
     <ClInclude Include="produto.h" />
   </ItemGroup>
