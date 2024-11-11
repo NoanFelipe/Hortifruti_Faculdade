@@ -124,3 +124,18 @@ void printProduto(Produto prod) {
     }
 }
 
+void printProdutoCompleto(Produto prod) 
+{
+    cout << "Nome:" << prod.nome << endl;
+    if (prod.tipo == UNT) {
+        cout << "Preço unitário: R$" << prod.preco << endl;
+        cout << "Quantidade: " << prod.qtde_peso << endl;
+    }
+    else 
+    {
+        cout << "Preço por quilo: R$" << prod.preco << endl;
+        cout << "Peso: " << prod.qtde_peso << endl;
+    }
+    cout << "Preço total: R$" << prod.qtde_peso * prod.preco << endl;
+}
+

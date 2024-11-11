@@ -15,4 +15,5 @@ Produto lerProduto(string m);
 Produto lerProdutoKg(string m);
 Produto lerProdutoParaJson(string m, int tipo);
 void printProduto(Produto prod);
+void printProdutoCompleto(Produto prod);
 #endif // PRODUTO_H

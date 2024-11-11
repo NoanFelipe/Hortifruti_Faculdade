@@ -35,7 +35,8 @@ void exibirMenuPagamento() {
     cout << "Digite a opção desejada:\n";
     cout << " 1. Pagamento à vista (15% de desc.)\n";
     cout << " 2. Pagamento à prazo\n";
-    cout << " 3. Voltar\n";
+    cout << " 3. Ver produtos no carrinho\n";
+    cout << " 4. Voltar\n";
     cout << "*******************************\n";
     cout << "Opção: ";
 }
@@ -55,6 +56,18 @@ void printProdutos(vector<Produto>& produtos)
     {
         cout << "ID do produto: " << i << "\n";
         printProduto(produtos[i]);
+        cout << endl;
+    }
+}
+
+void printCompras(Produto(&compras)[MAX], int* pQtd)
+{
+    for (int i = 0; i < *pQtd; i++)
+    {
+        cout << "Produtos comprados: \n\n";
+        cout << "*******************************\n";
+        printProdutoCompleto(compras[i]);
+        cout << "*******************************\n";
         cout << endl;
     }
 }
@@ -117,36 +130,7 @@ void lerProdutos(Produto(&compras)[MAX], int* pQtd)
     while (opt != 2);
 }
 
-/*
-void lerProdutos(Produto compras[], int* pQtd) {
-    int opcProd;
-    do {
-        exibirMenuProdutos();
-        cin >> opcProd;
-
-        switch (opcProd) {
-        case 1:
-            compras[*pQtd] = escolherProduto();
-            (*pQtd)++;
-            break;
-        case 2: {
-            compras[*pQtd] = escolherProduto();
-            (*pQtd)++;
-            break;
-        }
-        case 3:
-            cout << "Cancelando operação...\n";
-            break;
-        default:
-            cout << "Opção inválida!\n";
-            break;
-        }
-    } while (opcProd != 3);
-    limparTela();
-}
-*/
-
-void processarPagamento(double totalCompra) {
+void processarPagamento(Produto(&compras)[MAX], int *pQtd, double totalCompra) {
     int opcPgto;
     do {
         cout << "Total da compra: R$" << totalCompra << "\n";
@@ -173,6 +157,11 @@ void processarPagamento(double totalCompra) {
             break;
         }
         case 3:
+            limparTela();
+            printCompras(compras, pQtd);
+            limparTela();
+            break;
+        case 4:
             cout << "Cancelando operação...\n";
             limparTela();
             break;
@@ -180,7 +169,7 @@ void processarPagamento(double totalCompra) {
             cout << "Opção inválida!\n";
             break;
         }
-    } while (opcPgto != 1 && opcPgto != 2 && opcPgto != 3);
+    } while (!(opcPgto != 1 && opcPgto != 2 && opcPgto != 3));
 }
 
 // Calcula o preço total da sua compra atual
@@ -203,7 +192,7 @@ void resetarVetorProdutos(Produto(&compras)[MAX])
     fill(begin(compras), end(compras), Produto());
 }
 
-void adicionarNovoProduto()
+void alterarProdutos()
 {
     int opcProd;
     do {
@@ -255,14 +244,14 @@ void MenuPrincipal()
         case 2:
             limparTela();
             totalCompra = calcularPrecoTotal(compras, &qtd);
-            processarPagamento(totalCompra);
+            processarPagamento(compras, &qtd, totalCompra);
             resetarVetorProdutos(compras);
             break;
         case 3:
             cout << "Compra Cancelada\n";
             break;
         case 4:
-            adicionarNovoProduto();
+            alterarProdutos();
         default:
             cout << "Opção Inválida!\n";
             break;
