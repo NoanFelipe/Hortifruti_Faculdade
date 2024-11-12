@@ -12,7 +12,7 @@ Produto lerProdutoParaJson(string m, int tipo) //int tipo só pode ser 1 ou 2
 
     fflush(stdin);
     getline(cin, nome);
-    cout << "Nome do produto (sem espaço): ";
+    cout << "Nome do produto: ";
     cin >> nome;
 
     while (true) {
