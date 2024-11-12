@@ -12,7 +12,7 @@ Produto lerProdutoParaJson(string m, int tipo) //int tipo só pode ser 1 ou 2
 
     fflush(stdin);
     getline(cin, nome);
-    cout << "Nome do produto: ";
+    cout << "Nome do produto (sem espaço): ";
     cin >> nome;
 
     while (true) {
@@ -55,7 +55,7 @@ void printProduto(Produto prod) {
 
 void printProdutoCompleto(Produto prod) 
 {
-    cout << "Nome:" << prod.nome << endl;
+    cout << "Nome: " << prod.nome << endl;
     if (prod.tipo == UNT) {
         cout << "Preço unitário: R$" << prod.preco << endl;
         cout << "Quantidade: " << prod.qtde_peso << endl;
