@@ -97,7 +97,7 @@ void removerProdutoNoArquivo(const string& nomeArquivo, size_t posicao) {
 
         arquivo << j.dump(4); // Salva o JSON atualizado no arquivo
         arquivo.close();
-        cout << "Produto na posição " << posicao << " removido com sucesso.\n";
+        cout << "Produto na posição " << posicao << " removido com sucesso.\n\n";
     }
     else {
         cout << "Erro ao abrir o arquivo para escrita.\n";

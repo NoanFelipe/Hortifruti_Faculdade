@@ -1,10 +1,13 @@
 #include <iostream>
 using namespace std;
 
-void limparTela() {
+void limparTela(bool rapido) {
     cin.ignore();
-    cout << "Digite 'ENTER' para continuar...\n";
-    getchar();
+    if (!rapido)
+    {
+        cout << "Digite 'ENTER' para continuar...\n";
+        getchar();
+    }
     system("cls");
 }
 
@@ -24,5 +27,6 @@ int lerOpc() {
     cout << "Opção: ";
     //ler opção
     cin >> opc;
+    cout << endl;
     return opc;
 }

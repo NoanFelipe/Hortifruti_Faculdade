@@ -6,20 +6,26 @@
         "tipo": 1
     },
     {
-        "nome": "Picanha",
-        "preco": 80.0,
-        "qtde_peso": 2.388238254413e-312,
+        "nome": "Arroz",
+        "preco": 26.0,
+        "qtde_peso": 0.0,
         "tipo": 1
     },
     {
-        "nome": "Nescau",
-        "preco": 4.5,
-        "qtde_peso": -9.255963134931783e+61,
+        "nome": "Picanha",
+        "preco": 80.0,
+        "qtde_peso": 0.0,
+        "tipo": 2
+    },
+    {
+        "nome": "Tic-Tac",
+        "preco": 2.0,
+        "qtde_peso": 0.0,
         "tipo": 1
     },
     {
         "nome": "Banana",
-        "preco": 5.0,
+        "preco": 6.0,
         "qtde_peso": 0.0,
         "tipo": 2
     }

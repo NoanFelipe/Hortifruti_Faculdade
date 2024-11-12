@@ -12,19 +12,19 @@ using namespace std;
 
 using namespace std;
 
-void exibirMenuProdutos() {
+void exibirMenuAlterarProdutos()
+{
     cout << "Digite a opção desejada:\n";
-    cout << " 1. Por unidade\n";
-    cout << " 2. Por peso\n";
+    cout << " 1. Adicionar produto à lista\n";
+    cout << " 2. Remover produto da lista\n";
     cout << " 3. Voltar\n";
     cout << "*******************************\n";
     cout << "Opção: ";
 }
 
-void exibirMenuAdicionarProdutos()
-{
-    cout << "O novo produto deve ser:\n";
-    cout << " 1. Por unidade:\n";
+void exibirMenuProdutos() {
+    cout << "Digite a opção desejada:\n";
+    cout << " 1. Por unidade\n";
     cout << " 2. Por peso\n";
     cout << " 3. Voltar\n";
     cout << "*******************************\n";
@@ -60,11 +60,25 @@ void printProdutos(vector<Produto>& produtos)
     }
 }
 
-void printCompras(Produto(&compras)[MAX], int* pQtd)
+// Calcula o preço total da sua compra atual
+// Faz isso loopando pelo array de produtos e adicionando ao total a multiplicação do preço do produto e a quantidade ou peso do produto
+double calcularPrecoTotal(Produto compras[], int* pQtd)
 {
+    double totalP = 0;
     for (int i = 0; i < *pQtd; i++)
     {
-        cout << "Produtos comprados: \n\n";
+        totalP += compras[i].preco * compras[i].qtde_peso;
+    }
+    return totalP;
+}
+
+void printCompras(Produto(&compras)[MAX], int* pQtd)
+{
+    cout << "Produtos comprados: \n\n";
+    cout << "Valor total: R$" << calcularPrecoTotal(compras, pQtd) << endl << endl;
+
+    for (int i = 0; i < *pQtd; i++)
+    {
         cout << "*******************************\n";
         printProdutoCompleto(compras[i]);
         cout << "*******************************\n";
@@ -125,7 +139,7 @@ void lerProdutos(Produto(&compras)[MAX], int* pQtd)
             compras[*pQtd] = escolherProduto(produtos);
             (*pQtd)++;
         }
-        limparTela();
+        limparTela(true);
     } 
     while (opt != 2);
 }
@@ -141,7 +155,7 @@ void processarPagamento(Produto(&compras)[MAX], int *pQtd, double totalCompra) {
         case 1:
             cout << "Total à vista: R$ " << (totalCompra * 0.85) << "\n";
             cout << "Compra finalizada!\n";
-            limparTela();
+            limparTela(true);
             break;
         case 2: {
             int numParcelas;
@@ -153,35 +167,23 @@ void processarPagamento(Produto(&compras)[MAX], int *pQtd, double totalCompra) {
             }
             cout << "Total à prazo: " << numParcelas << " x de R$ " << (totalCompra / numParcelas) << "\n";
             cout << "Compra finalizada!\n";
-            limparTela();
+            limparTela(true);
             break;
         }
         case 3:
-            limparTela();
+            limparTela(true);
             printCompras(compras, pQtd);
-            limparTela();
+            limparTela(true);
             break;
         case 4:
             cout << "Cancelando operação...\n";
-            limparTela();
+            limparTela(true);
             break;
         default:
             cout << "Opção inválida!\n";
             break;
         }
     } while (!(opcPgto != 1 && opcPgto != 2 && opcPgto != 3));
-}
-
-// Calcula o preço total da sua compra atual
-// Faz isso loopando pelo array de produtos e adicionando ao total a multiplicação do preço do produto e a quantidade ou peso do produto
-double calcularPrecoTotal(Produto compras[], int* pQtd)
-{
-    double totalP = 0;
-    for (int i = 0; i < *pQtd; i++)
-    {
-        totalP += compras[i].preco * compras[i].qtde_peso;
-    }
-    return totalP;
 }
 
 // Anula todos os valores de um vetor de Produtos
@@ -192,8 +194,9 @@ void resetarVetorProdutos(Produto(&compras)[MAX])
     fill(begin(compras), end(compras), Produto());
 }
 
-void alterarProdutos()
+void adicionarProduto()
 {
+    limparTela(true);
     int opcProd;
     do {
         exibirMenuProdutos();
@@ -216,7 +219,43 @@ void alterarProdutos()
         }
     } while (opcProd != 3);
 
-    limparTela();
+    limparTela(true);
+}
+
+void removerProduto()
+{
+    limparTela(true);
+    vector<Produto> produtos = lerProdutosDoArquivo(JsonFileName);
+    printProdutos(produtos);
+    int removeI = 0;
+    do 
+    {
+        cout << "Informe o ID do produto à ser removido (-1 para voltar): ";
+        cin >> removeI;
+    } while (!(removeI >= 0 && removeI < produtos.size()) || removeI == -1);
+
+    removerProdutoNoArquivo(JsonFileName, removeI);
+    limparTela(true);
+}
+
+void alterarProdutos()
+{
+    int opt = 0;
+
+    do
+    {
+        exibirMenuAlterarProdutos();
+        cin >> opt;
+        if (opt == 1)
+        {
+            adicionarProduto();
+        }
+        else if (opt == 2)
+        {
+            removerProduto();
+        }
+    } while (opt != 3);
+    limparTela(true);
 }
 
 void Setup()
@@ -238,11 +277,11 @@ void MenuPrincipal()
 
         switch (opc) {
         case 1:
-            limparTela();
+            limparTela(false);
             lerProdutos(compras, &qtd);
             break;
         case 2:
-            limparTela();
+            limparTela(false);
             totalCompra = calcularPrecoTotal(compras, &qtd);
             processarPagamento(compras, &qtd, totalCompra);
             resetarVetorProdutos(compras);
@@ -252,6 +291,7 @@ void MenuPrincipal()
             break;
         case 4:
             alterarProdutos();
+            break;
         default:
             cout << "Opção Inválida!\n";
             break;
