@@ -150,7 +150,7 @@ void lerProdutos(Produto(&compras)[MAX], int* pQtd)
 void resetarVetorProdutos(Produto(&compras)[MAX], int* pQtd)
 {
     fill(begin(compras), end(compras), Produto());
-    pQtd = 0;
+    (*pQtd) = 0;
 }
 
 void processarPagamento(Produto(&compras)[MAX], int *pQtd, double totalCompra) {
@@ -291,12 +291,17 @@ void MenuPrincipal()
             lerProdutos(compras, &qtd);
             break;
         case 2:
-            limparTela(false);
+            limparTela(true);
             totalCompra = calcularPrecoTotal(compras, &qtd);
             if (totalCompra > 0)
                 processarPagamento(compras, &qtd, totalCompra);
             else
-                cout << "Voce não tem nenhum produto no carrinho, a compra não pode ser finalizada!";
+            {
+                cout << "**********************************************************************************\n";
+                cout << "Voce não tem nenhum produto no carrinho, a compra não pode ser finalizada!\n";
+                cout << "**********************************************************************************\n";
+                limparTela(false);
+            }
             break;
         case 3:
             cout << "Compra Cancelada\n";
