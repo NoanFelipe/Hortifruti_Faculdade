@@ -9,7 +9,7 @@ using json = nlohmann::json;
 
 using namespace std;
 
-// Funções para manipulação de produtos em JSON
+// Funcões para manipulacão de produtos em JSON
 json produtoParaJson(const Produto& prod);
 Produto jsonParaProduto(const json& j);
 void criarArquivoSeNaoExistir(const string& nomeArquivo);

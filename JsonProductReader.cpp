@@ -66,7 +66,7 @@ void adicionarProdutoNoArquivo(const string& nomeArquivo, const Produto& novoPro
             j.push_back(produtoParaJson(prod));
         }
 
-        arquivo << j.dump(4); // "4" define uma indentação para facilitar a leitura
+        arquivo << j.dump(4); // "4" define uma indentacão para facilitar a leitura
         arquivo.close();
     }
     else {
@@ -77,13 +77,13 @@ void adicionarProdutoNoArquivo(const string& nomeArquivo, const Produto& novoPro
 void removerProdutoNoArquivo(const string& nomeArquivo, size_t posicao) {
     vector<Produto> produtos = lerProdutosDoArquivo(nomeArquivo);
 
-    // Verifica se a posição é válida
+    // Verifica se a posicão é válida
     if (posicao >= produtos.size()) {
-        cout << "Erro: posição inválida. Nenhum produto foi removido.\n";
+        cout << "Erro: posicão inválida. Nenhum produto foi removido.\n";
         return;
     }
 
-    // Remove o produto da posição desejada
+    // Remove o produto da posicão desejada
     produtos.erase(produtos.begin() + posicao);
 
     // Reescreve o vetor atualizado de produtos no arquivo JSON
@@ -97,7 +97,7 @@ void removerProdutoNoArquivo(const string& nomeArquivo, size_t posicao) {
 
         arquivo << j.dump(4); // Salva o JSON atualizado no arquivo
         arquivo.close();
-        cout << "Produto na posição " << posicao << " removido com sucesso.\n\n";
+        cout << "Produto na posicão " << posicao << " removido com sucesso.\n\n";
     }
     else {
         cout << "Erro ao abrir o arquivo para escrita.\n";

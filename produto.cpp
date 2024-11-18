@@ -18,11 +18,11 @@ Produto lerProdutoParaJson(string m, int tipo) //int tipo só pode ser 1 ou 2
     while (true) {
         if (tipo == UNT)
         {
-            cout << "Preço unitário: R$";
+            cout << "Preco unitário: R$";
         }
         else if (tipo == PESO)
         {
-            cout << "Preço por kilo: R$";
+            cout << "Preco por kilo: R$";
         }
         cin >> precoUnt;
         if (precoUnt > 0) {
@@ -45,11 +45,11 @@ Produto lerProdutoParaJson(string m, int tipo) //int tipo só pode ser 1 ou 2
 void printProduto(Produto prod) {
     if (prod.tipo == UNT) {
         cout << "Nome: " << prod.nome << endl;
-        cout << "Preço unitário: R$" << prod.preco << endl;
+        cout << "Preco unitário: R$" << prod.preco << endl;
     }
     else {
         cout << "Nome: " << prod.nome << endl;
-        cout << "Preço por quilo: R$" << prod.preco << endl;
+        cout << "Preco por quilo: R$" << prod.preco << endl;
     }
 }
 
@@ -57,14 +57,14 @@ void printProdutoCompleto(Produto prod)
 {
     cout << "Nome: " << prod.nome << endl;
     if (prod.tipo == UNT) {
-        cout << "Preço unitário: R$" << prod.preco << endl;
+        cout << "Preco unitário: R$" << prod.preco << endl;
         cout << "Quantidade: " << prod.qtde_peso << endl;
     }
     else 
     {
-        cout << "Preço por quilo: R$" << prod.preco << endl;
+        cout << "Preco por quilo: R$" << prod.preco << endl;
         cout << "Peso: " << prod.qtde_peso << endl;
     }
-    cout << "Preço total: R$" << prod.qtde_peso * prod.preco << endl;
+    cout << "Preco total: R$" << prod.qtde_peso * prod.preco << endl;
 }
 

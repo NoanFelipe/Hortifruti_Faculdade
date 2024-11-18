@@ -1,24 +1,24 @@
 [
     {
-        "nome": "Coca-Cola",
+        "nome": "Maca",
         "preco": 12.0,
-        "qtde_peso": 0.0,
-        "tipo": 1
-    },
-    {
-        "nome": "Arroz",
-        "preco": 26.0,
-        "qtde_peso": 0.0,
-        "tipo": 1
-    },
-    {
-        "nome": "Picanha",
-        "preco": 80.0,
         "qtde_peso": 0.0,
         "tipo": 2
     },
     {
-        "nome": "Tic-Tac",
+        "nome": "Melancia",
+        "preco": 3.0,
+        "qtde_peso": 0.0,
+        "tipo": 2
+    },
+    {
+        "nome": "Pera",
+        "preco": 29.0,
+        "qtde_peso": 0.0,
+        "tipo": 2
+    },
+    {
+        "nome": "Mel",
         "preco": 2.0,
         "qtde_peso": 0.0,
         "tipo": 1

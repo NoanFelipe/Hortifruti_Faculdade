@@ -18,14 +18,14 @@ int lerOpc() {
     cout << "*****************************************\n";
     cout << "|        Quintandinha do seu Zé        |\n";
     cout << "*****************************************\n";
-    cout << " Digite a opção desejada:\n";
+    cout << " Digite a opcão desejada:\n";
     cout << " 1. Ler próximo produto\n";
     cout << " 2. Finalizar compra\n";
     cout << " 3. Cancelar compra\n";
     cout << " 4. Modificar banco de produtos\n";
     cout << "*****************************************\n";
-    cout << "Opção: ";
-    //ler opção
+    cout << "Opcão: ";
+    //ler opcão
     cin >> opc;
     cout << endl;
     return opc;

@@ -14,40 +14,40 @@ using namespace std;
 
 void exibirMenuAlterarProdutos()
 {
-    cout << "Digite a opção desejada:\n";
+    cout << "Digite a opcão desejada:\n";
     cout << " 1. Adicionar produto à lista\n";
     cout << " 2. Remover produto da lista\n";
     cout << " 3. Voltar\n";
     cout << "*******************************\n";
-    cout << "Opção: ";
+    cout << "Opcão: ";
 }
 
 void exibirMenuProdutos() {
-    cout << "Digite a opção desejada:\n";
+    cout << "Digite a opcão desejada:\n";
     cout << " 1. Por unidade\n";
     cout << " 2. Por peso\n";
     cout << " 3. Voltar\n";
     cout << "*******************************\n";
-    cout << "Opção: ";
+    cout << "Opcão: ";
 }
 
 void exibirMenuPagamento() {
-    cout << "Digite a opção desejada:\n";
+    cout << "Digite a opcão desejada:\n";
     cout << " 1. Pagamento à vista (15% de desc.)\n";
     cout << " 2. Pagamento à prazo\n";
     cout << " 3. Ver produtos no carrinho\n";
     cout << " 4. Voltar\n";
     cout << "*******************************\n";
-    cout << "Opção: ";
+    cout << "Opcão: ";
 }
 
 void exibirMenuEscolhaProdutos()
 {
-    cout << "Digite a opção desejada:\n";
+    cout << "Digite a opcão desejada:\n";
     cout << " 1. Escolher produto:\n";
     cout << " 2. Voltar\n";
     cout << "*******************************\n";
-    cout << "Opção: ";
+    cout << "Opcão: ";
 }
 
 void printProdutos(vector<Produto>& produtos)
@@ -60,8 +60,8 @@ void printProdutos(vector<Produto>& produtos)
     }
 }
 
-// Calcula o preço total da sua compra atual
-// Faz isso loopando pelo array de produtos e adicionando ao total a multiplicação do preço do produto e a quantidade ou peso do produto
+// Calcula o preco total da sua compra atual
+// Faz isso loopando pelo array de produtos e adicionando ao total a multiplicacão do preco do produto e a quantidade ou peso do produto
 double calcularPrecoTotal(Produto compras[], int* pQtd)
 {
     double totalP = 0;
@@ -176,19 +176,19 @@ void processarPagamento(Produto(&compras)[MAX], int *pQtd, double totalCompra) {
             limparTela(true);
             break;
         case 4:
-            cout << "Cancelando operação...\n";
+            cout << "Cancelando operacão...\n";
             limparTela(true);
             break;
         default:
-            cout << "Opção inválida!\n";
+            cout << "Opcão inválida!\n";
             break;
         }
     } while (!(opcPgto != 1 && opcPgto != 2 && opcPgto != 3));
 }
 
 // Anula todos os valores de um vetor de Produtos
-// Para que quando o pagamento seja efetuado, os produtos que você adicionou na compra anterior não afetem o preço da sua próxima compra
-// A função fill preenche o array com um novo produto vazio, o primeiro argumento é o primeiro valor do array, o segundo é o ultimo valor do array, e o terceiro é o valor que preencherá o array
+// Para que quando o pagamento seja efetuado, os produtos que você adicionou na compra anterior não afetem o preco da sua próxima compra
+// A funcão fill preenche o array com um novo produto vazio, o primeiro argumento é o primeiro valor do array, o segundo é o ultimo valor do array, e o terceiro é o valor que preencherá o array
 void resetarVetorProdutos(Produto(&compras)[MAX])
 {
     fill(begin(compras), end(compras), Produto());
@@ -211,10 +211,10 @@ void adicionarProduto()
             break;
         }
         case 3:
-            cout << "Cancelando operação...\n";
+            cout << "Cancelando operacão...\n";
             break;
         default:
-            cout << "Opção inválida!\n";
+            cout << "Opcão inválida!\n";
             break;
         }
     } while (opcProd != 3);
@@ -293,7 +293,7 @@ void MenuPrincipal()
             alterarProdutos();
             break;
         default:
-            cout << "Opção Inválida!\n";
+            cout << "Opcão Inválida!\n";
             break;
         }
     } while (opc != 3);
