@@ -1,0 +1,1 @@
+Com o MinGW instalado, na pasta dos projeto, digite esse código no CMD: "g++ -o hortifruti.exe main.cpp produto.cpp tipos.cpp navegabilidade.cpp JsonProductReader.cpp", e depois abra o arquivo hortifruti.exe
